@@ -1,13 +1,13 @@
-// Importa a biblioteca mysql2 usando promises, que permite usar async/await (programação assíncrona)
+// importa a biblioteca mysql2 com suporte a promises para utilização de async/await
 const mysql = require('mysql2/promise');
 
-// Cria as conexões com o banco de dados
+// cria um pool de conexões com o banco de dados
 const conexao = mysql.createPool({
-  host: 'localhost',     // endereço do servidor MySQL
-  user: 'root',         // usuário do banco
-  password: 'sua_senha', // senha (deve ser alterada para a sua senha)
-  database: 'escola'    // nome do banco de dados
+  host: 'localhost', // endereço do servidor mysql
+  user: 'root', // usuário utilizado para acesso ao banco
+  password: 'sua_senha', // senha de autenticação do banco
+  database: 'escola' // nome da base de dados utilizada
 });
 
-// Exporta a variável (conexão)
+// exporta o pool de conexões para ser utilizado em outros arquivos
 module.exports = conexao;

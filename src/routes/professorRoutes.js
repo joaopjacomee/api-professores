@@ -1,26 +1,26 @@
-// Importa Express para utilizar o Router e definir as rotas
-const express = require('express')
+// importa o framework express para criação e gerenciamento das rotas
+const express = require('express');
 
-// Importa o controller
+// importa o controller responsável pelas regras de negócio dos professores
 const professorController = require('../controllers/professorController');
 
-// Cria uma instância do Router (roteador)
+// cria uma instância do roteador do express
 const router = express.Router();
 
-// Rota GET /professores -> usada para listar todos os professores
+// rota responsável por listar todos os professores cadastrados
 router.get('/', professorController.listarProfessores);
 
-// Rota GET /professores/:id -> realiza a busca de professor por ID
+// rota responsável por buscar um professor específico pelo id
 router.get('/:id', professorController.buscarProfPorId);
 
-// Rota POST /professores -> cadastra um novo professor
+// rota responsável por cadastrar um novo professor
 router.post('/', professorController.cadastrarProfessor);
 
-// Rota PUT /professores/:id -> atualiza professor por ID
+// rota responsável por atualizar os dados de um professor pelo id
 router.put('/:id', professorController.atualizarProfessor);
 
-// Rota DELETE /professores/:id  -> remove professor por ID
+// rota responsável por remover um professor pelo id
 router.delete('/:id', professorController.deletarProfessor);
 
-// Exporta as rotas para serem usadas no app.js
+// exporta o roteador para utilização no arquivo principal da aplicação
 module.exports = router;

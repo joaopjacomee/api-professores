@@ -1,71 +1,82 @@
-// Importa a conexão com o banco de dados
+// importa a conexão com o banco de dados
 const conexao = require('../database/conexao');
 
-// Cria função para listar todos os professores
+// função responsável por listar todos os professores cadastrados
 const listarProfessores = async () => {
-  // Define a consulta (query) de seleção
+
+  // define o comando sql para consultar todos os registros
   const sql = 'SELECT * FROM professores';
 
-  // Executa a query de forma assíncrona
+  // executa a consulta no banco de dados
   const [rows] = await conexao.execute(sql);
 
-  // Retorna os registros encontrados
+  // retorna os registros encontrados
   return rows;
 };
 
-// Cria função de busca por ID
+// função responsável por buscar um professor pelo id
 const buscarProfPorId = async (id) => {
-  // Define a query com parâmetro ? para evitar SQL injection
+
+  // define o comando sql utilizando parâmetro para maior segurança
   const sql = 'SELECT * FROM professores WHERE id = ?';
 
-  // Executa a query passando o id como parâmetro
+  // executa a consulta passando o id informado
   const [rows] = await conexao.execute(sql, [id]);
 
-  // Retorna o primeiro registro encontrado
+  // retorna apenas o primeiro resultado encontrado
   return rows[0];
 };
 
-// Cria função para cadastrar um novo professor
+// função responsável por cadastrar um novo professor
 const cadastrarProfessor = async (professor) => {
-  // Desestrutura o objeto professor, coletando os atributos
+
+  // extrai os atributos do objeto recebido
   const { nome, disciplina, email, salario } = professor;
 
-  // Define a query de inserção com parâmetros
+  // define o comando sql para inserção dos dados
   const sql = 'INSERT INTO professores (nome, disciplina, email, salario) VALUES (?, ?, ?, ?)';
 
-  // Executa a inserção passando os valores como array
+  // executa a inserção no banco de dados
   const [resultado] = await conexao.execute(sql, [nome, disciplina, email, salario]);
 
-  // Retorna o ID inserido como resultado da operação
+  // retorna o id do registro inserido
   return resultado.insertId;
 };
 
-// Função para atualizar os dados de um professor
+// função responsável por atualizar os dados de um professor
 const atualizarProfessor = async (id, professor) => {
-  //Pega os atributos de professor
-  const  { nome, disciplina, email, salario } = professor
 
-  // Query de atualização
+  // extrai os novos dados do objeto recebido
+  const { nome, disciplina, email, salario } = professor;
+
+  // define o comando sql de atualização
   const sql = 'UPDATE professores SET nome = ?, disciplina = ?, email = ?, salario = ? WHERE id = ?';
 
-  // Executa a atualização com os novos valores e o ID
+  // executa a atualização dos dados no banco
   const [resultado] = await conexao.execute(sql, [nome, disciplina, email, salario, id]);
 
-  // Retorna o resultado
+  // retorna o resultado da operação
   return resultado;
 };
 
-// Função para deletar um professor pelo ID
+// função responsável por remover um professor pelo id
 const deletarProfessor = async (id) => {
-  // Query de exclusão
+
+  // define o comando sql para exclusão do registro
   const sql = 'DELETE FROM professores WHERE id = ?';
 
-  // Executa a exclusão de forma assíncrona
+  // executa a exclusão no banco de dados
   const [resultado] = await conexao.execute(sql, [id]);
 
-  // Retorna o resultado
+  // retorna o resultado da operação
   return resultado;
 };
 
-// Exporta todas as funções do model
-module.exports = { listarProfessores, buscarProfPorId, cadastrarProfessor, atualizarProfessor, deletarProfessor };
+// exporta todas as funções para utilização em outros arquivos
+module.exports = {
+  listarProfessores,
+  buscarProfPorId,
+  cadastrarProfessor,
+  atualizarProfessor,
+  deletarProfessor
+};

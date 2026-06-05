@@ -1,17 +1,17 @@
-// Importa o Express para criar a aplicação
+// importa o framework express para criação da aplicação web
 const express = require('express');
 
-// Cria a aplicação
+// cria a instância principal da aplicação
 const app = express();
 
-// Importa as rotas do professor
+// importa o arquivo responsável pelas rotas de professores
 const professorRoutes = require('./routes/professorRoutes');
 
-// Middleware para interpretar o corpo das requisições em formato JSON
+// middleware utilizado para interpretar requisições no formato json
 app.use(express.json());
 
-// Define o prefixo /professores para todas as rotas do professor
-app.use('/professores',professorRoutes);
+// associa as rotas de professores ao prefixo '/professores'
+app.use('/professores', professorRoutes);
 
-// Exporta a aplicação
+// exporta a aplicação para utilização em outros arquivos
 module.exports = app;

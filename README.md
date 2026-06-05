@@ -1,204 +1,206 @@
-# API REST — CRUD de Professores
+# API Professores
 
-Este projeto é uma API REST desenvolvida com Node.js, Express e MySQL, estruturada com arquitetura MVC (Model-View-Controller).
+API REST desenvolvida com Node.js, Express e MySQL para gerenciamento de professores. O projeto implementa operações CRUD (Create, Read, Update e Delete), permitindo cadastrar, consultar, atualizar e remover professores em um banco de dados relacional.
 
-A aplicação segue o padrão CRUD (Create, Read, Update e Delete), permitindo operações de cadastro, consulta, atualização e remoção de registros de professores.
+## Tecnologias Utilizadas
 
-## Tecnologias utilizadas
+* Node.js
+* Express
+* MySQL
+* mysql2
+* JavaScript
+* REST API
 
-- JavaScript
-- Node.js
-- Express
-- MySQL
+## Estrutura do Projeto
 
-## Estrutura do projeto
-
-```
-projeto-api-professores/
+```text
+api-professores/
 │
 ├── src/
 │   ├── controllers/
-│   │   └── professorController.js   # Lógica das requisições e respostas
-│   ├── models/
-│   │   └── professorModel.js        # Queries SQL com async/await
-│   ├── routes/
-│   │   └── professorRoutes.js       # Definição das rotas REST
+│   │   └── professorController.js
+│   │
 │   ├── database/
-│   │   └── conexao.js               # Configuração da conexão com MySQL
-│   └── app.js                       # Configuração do Express
+│   │   └── conexao.js
+│   │
+│   ├── models/
+│   │   └── professorModel.js
+│   │
+│   ├── routes/
+│   │   └── professorRoutes.js
+│   │
+│   └── app.js
 │
-├── server.js                        # Ponto de entrada da aplicação
-├── script.sql                       # Script de criação do banco e tabela
+├── server.js
 ├── package.json
 └── README.md
 ```
 
-## Banco de dados
+## Funcionalidades
 
-O script de criação do banco de dados e da tabela está localizado em **`database.sql`** na raiz do projeto.
+* Listar todos os professores
+* Buscar professor por ID
+* Cadastrar novo professor
+* Atualizar dados de um professor
+* Remover professor do banco de dados
 
-Execute-o no seu MySQL antes de subir a aplicação:
+## Estrutura da Tabela
 
 ```sql
-CREATE DATABASE escola;
-
-USE escola;
-
 CREATE TABLE professores (
-  id         INT PRIMARY KEY AUTO_INCREMENT,
-  nome       VARCHAR(100) NOT NULL,
-  disciplina VARCHAR(100) NOT NULL,
-  email      VARCHAR(100) NOT NULL,
-  salario    DECIMAL(10,2) NOT NULL
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    disciplina VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    salario DECIMAL(10,2) NOT NULL
 );
 ```
 
-## Como executar
+## Instalação
 
-### Pré-requisitos
-
-- [Node.js](https://nodejs.org/) instalado
-- MySQL rodando localmente
-
-### 1. Clone o repositório
+### 1. Clonar o repositório
 
 ```bash
-git clone https://github.com/adr0ude/projeto-api-professores.git
-```
-### 1. Acesse a pasta do projeto
-```bash
-cd projeto-api-professores
+git clone https://github.com/joaopjacomee/api-professores.git
 ```
 
-### 3. Instale as dependências
+### 2. Acessar a pasta do projeto
+
+```bash
+cd api-professores
+```
+
+### 3. Instalar as dependências
 
 ```bash
 npm install
 ```
 
-### 4. Configure a conexão com o banco
+### 4. Configurar o banco de dados
 
-Edite o arquivo `src/database/conexao.js` e informe suas credenciais do MySQL:
+Crie um banco chamado:
+
+```sql
+CREATE DATABASE escola;
+```
+
+Em seguida, crie a tabela `professores` utilizando o script apresentado anteriormente.
+
+### 5. Configurar a conexão
+
+No arquivo:
+
+```text
+src/database/conexao.js
+```
+
+Altere as credenciais de acesso ao MySQL:
 
 ```javascript
 const conexao = mysql.createPool({
-  host: 'localhost', // Adicione o endereço do seu banco de dados
-  user: 'root', // Modifique para o usuário do seu banco
-  password: 'sua_senha', // Altere para sua senha
+  host: 'localhost',
+  user: 'root',
+  password: 'sua_senha',
   database: 'escola'
 });
 ```
 
-### 4. Execute o script SQL
+## Executando o Projeto
 
-Abra seu cliente MySQL (Workbench, DBeaver ou terminal) e execute o arquivo `database.sql`.
-
-### 5. Inicie o servidor
-
-**Execução padrão:**
 ```bash
 node server.js
 ```
 
-**Modo desenvolvimento** (reinicia automaticamente com Nodemon):
-```bash
-npm run dev
+O servidor será iniciado em:
+
+```text
+http://localhost:3000
 ```
 
-**Modo produção:**
-```bash
-npm start
-```
+## Endpoints
 
-O servidor estará disponível em: `http://localhost:3000`
+### Listar professores
 
-
-## 🔀 Endpoints da API
-Esta seção apresenta os endpoints da API e o resultado de testes que foram realizados com o **Postman**.
-
-### Base URL
-
-```
-http://localhost:3000/professores
-```
-
----
-
-### Listar todos os professores
-
-```
+```http
 GET /professores
 ```
 
-**Exemplo de resposta utilizando o Postman:**
-
-<img width="1431" height="751" alt="listarProfs" src="https://github.com/user-attachments/assets/a6c3020a-85b7-4ed8-aa88-a0801501e516" />
-
-
 ### Buscar professor por ID
 
-```
+```http
 GET /professores/:id
 ```
 
-**Exemplo de resposta utilizando o Postman:**
+Exemplo:
 
-<img width="1437" height="396" alt="image" src="https://github.com/user-attachments/assets/b8d35e06-1979-4516-89cf-05b16d7e5c8f" />
-
-
+```http
+GET /professores/1
+```
 
 ### Cadastrar professor
 
-```
+```http
 POST /professores
 ```
 
-**Body (JSON):**
+Body:
+
 ```json
 {
-  "nome": "Evandro",
-  "disciplina": "Desenvolvimento Web",
-  "email": "evandro@ifce.edu.br",
-  "salario": "10000.00"
+  "nome": "João Silva",
+  "disciplina": "Banco de Dados",
+  "email": "joao@email.com",
+  "salario": 4500
 }
 ```
-
-**Exemplo de resposta utilizando o Postman:**
-
-<img width="1438" height="486" alt="image" src="https://github.com/user-attachments/assets/515b3116-8761-4827-856d-14434d8107ea" />
-
 
 ### Atualizar professor
 
-```
+```http
 PUT /professores/:id
 ```
 
-**Body (JSON):**
+Body:
+
 ```json
 {
-  "nome": "Maria Eduarda",
-  "disciplina": "Desenvolvimento Web",
-  "email": "mariaeduarda@ifce.edu.br",
-  "salario": "5600.00"
+  "nome": "João Silva",
+  "disciplina": "Programação Web",
+  "email": "joao@email.com",
+  "salario": 5000
 }
 ```
 
-**Exemplo de resposta utilizando o Postman:**
+### Remover professor
 
-<img width="1433" height="497" alt="atualizar" src="https://github.com/user-attachments/assets/1e2a5d3f-65a7-4532-8f5d-c4b70a231cd8" />
-
-### Deletar professor
-
-```
+```http
 DELETE /professores/:id
 ```
 
-**Exemplo de resposta utilizando o Postman:**
+## Exemplo de Resposta
 
-<img width="1435" height="297" alt="deletar" src="https://github.com/user-attachments/assets/6e6ee616-60f3-441b-acd4-c3660b98f1c0" />
+```json
+{
+  "id": 1,
+  "nome": "João Silva",
+  "disciplina": "Banco de Dados",
+  "email": "joao@email.com",
+  "salario": 4500
+}
+```
 
+## Arquitetura
+
+O projeto segue o padrão MVC:
+
+* Model: responsável pelo acesso aos dados.
+* Controller: responsável pelas regras de negócio.
+* Routes: responsável pelo mapeamento das rotas.
+* Database: responsável pela conexão com o banco.
+* Server/App: inicialização da aplicação.
 
 ## Autor
 
-Este projeto foi desenvolvido pela discente Maria Eduarda Araujo Sales como obtenção de nota parcial na disciplina de Desenvolvimento Web.
+João Paulo Jácome
+
+GitHub: https://github.com/joaopjacomee

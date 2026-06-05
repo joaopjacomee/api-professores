@@ -10,16 +10,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/adr0ude/projeto-api-professores.git"
+    "url": "git+https://github.com/joaopjacomee/api-professores.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "bugs": {
-    "url": "https://github.com/adr0ude/projeto-api-professores/issues"
+    "url": "https://github.com/joaopjacomee/api-professores/issues"
   },
-  "homepage": "https://github.com/adr0ude/projeto-api-professores#readme",
+  "homepage": "https://github.com/joaopjacomee/api-professores#readme",
   "dependencies": {
     "express": "^5.2.1",
     "mysql2": "^3.22.4",
